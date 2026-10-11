@@ -1,3 +1,9 @@
+DROP DATABASE ProjetVirt;
+
+CREATE DATABASE IF NOT EXISTS ProjetVirt;
+
+USE ProjetVirt;
+
 CREATE TABLE COMPTE (
     id_compte INT PRIMARY KEY,
     login TEXT,
@@ -31,9 +37,10 @@ CREATE TABLE COURS (
 );
 
 CREATE TABLE NOTE (
-    id_etudiant INT PRIMARY KEY,
-    id_cours INT PRIMARY KEY,
+    id_etudiant INT NOT NULL,
+    id_cours INT NOT NULL,
     valeur INT,
     commentaire TEXT,
+    PRIMARY KEY (id_etudiant, id_cours),
     CONSTRAINT CHECK (valeur <= 20 AND valeur >= 0)
 )
