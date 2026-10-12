@@ -16,16 +16,20 @@ CREATE TABLE COMPTE (
 
 CREATE TABLE PRESTATAIRE (
     id_prestataire INT PRIMARY KEY,
+    id_compte INT,
     nom CHAR(255),
     prenom CHAR(255),
-    email CHAR(255)
+    email CHAR(255),
+    CONSTRAINT FOREIGN KEY (id_compte) REFERENCES COMPTE(id_compte)
 );
 
 CREATE TABLE CLIENT (
     id_client INT PRIMARY KEY,
+    id_compte INT,
     nom CHAR(255),
     prenom CHAR(255),
-    email CHAR(255)
+    email CHAR(255),
+    CONSTRAINT FOREIGN KEY (id_compte) REFERENCES COMPTE(id_compte)
 );
 
 CREATE TABLE SERVICE (
