@@ -18,14 +18,14 @@ boutonConnexion.addEventListener("click", function () {
     // Étudiant
     if (identifiant === "d25024703" && motDePasse === "mdp") {
 
-        window.location.href = "etudiant.html";
+        window.location.href = "client.html";
         return;
     }
 
-    // Professeur
-    if (identifiant === "professeur" && motDePasse === "mdp") {
+    // Prestataire
+    if (identifiant === "prestataire" && motDePasse === "mdp") {
 
-        window.location.href = "professeur.html";
+        window.location.href = "prestataire.html";
         return;
     }
 

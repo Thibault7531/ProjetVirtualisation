@@ -5,32 +5,32 @@
 const comptesAttenteParDefaut = [
     {
         id: 1,
-        nom: "Professeur 1",
-        email: "Professeur1@gmail.com",
-        type: "Professeur"
+        nom: "Prestataire 1",
+        email: "Prestataire1@gmail.com",
+        type: "Prestataire"
     },
     {
         id: 2,
-        nom: "Professeur 2",
-        email: "Professeur2@gmail.com",
-        type: "Professeur"
+        nom: "Prestataire 2",
+        email: "Prestataire2@gmail.com",
+        type: "Prestataire"
     },
     {
         id: 3,
-        nom: "Etudiant 1",
-        email: "Etudiant1@gmail.com",
+        nom: "Client 1",
+        email: "Client1@gmail.com",
         type: "Étudiant"
     },
     {
         id: 4,
-        nom: "Etudiant 2",
-        email: "Etudiant2@gmail.com",
+        nom: "Client 2",
+        email: "Client2@gmail.com",
         type: "Étudiant"
     },
     {
         id: 5,
-        nom: "Etudiant 3",
-        email: "Etudiant3@gmail.com",
+        nom: "Client 3",
+        email: "Client3@gmail.com",
         type: "Étudiant"
     }
 ];

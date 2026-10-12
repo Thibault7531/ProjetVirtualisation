@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/client.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro:wght@400;500;600;700&display=swap">
+    <script src="../js/client.js" defer></script>
+</head>
+
+<body>
+
+    <div class="ecran-tudiant">
+
+        <main class="client-container">
+
+            <!-- Fond blanc -->
+            <div class="ecran-tudiant-child"></div>
+
+            <!-- En-tête -->
+            <header class="header">
+                <h1 class="client">Client</h1>
+            </header>
+
+            <!-- Tableau des services -->
+            <section class="notes">
+
+                <!-- En-tête -->
+                <div class="notes-header">
+                    <div>Services</div>
+                    <div>Prestataire</div>
+                    <div>Note</div>
+                    <div>Commentaire</div>
+                    <div></div>
+                </div>
+
+
+                <!-- Service 1 -->
+                <div class="service" data-service="1">
+
+                    <div class="service-nom">
+                        Service 1
+                    </div>
+
+                    <div class="prestataire">
+                        M. Dupont
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="14.56" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours très bien">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+
+                <!-- Service 2 -->
+                <div class="service" data-service="2">
+
+                    <div class="service-nom">
+                        Service 2
+                    </div>
+
+                    <div class="prestataire">
+                        Mme Martin
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="18" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours mauvais">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+
+                <!-- Service 3 -->
+                <div class="service" data-service="3">
+
+                    <div class="service-nom">
+                        Service 3
+                    </div>
+
+                    <div class="prestataire">
+                        M. Bernard
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="12.50" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours à améliorer">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+
+                <!-- Service 4 -->
+                <div class="service" data-service="4">
+
+                    <div class="service-nom">
+                        Service 4
+                    </div>
+
+                    <div class="prestataire">
+                        Mme Leroy
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="8" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours très bien">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Déconnexion -->
+            <button class="logout-button" id="logoutButton" type="button">
+                <span class="logout-icon">↪</span>
+                <span>Se déconnecter</span>
+            </button>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

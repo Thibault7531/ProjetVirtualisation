@@ -11,7 +11,7 @@ const typeCompteMenu =
 const typeCompteTexte =
     document.getElementById("typeCompteTexte");
 
-let typeCompte = "etudiant";
+let typeCompte = "client";
 
 
 // Ouvrir / fermer le menu

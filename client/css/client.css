@@ -1,0 +1,344 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'SF Pro', sans-serif;
+}
+
+
+/* =========================
+   ÉCRAN
+   ========================= */
+
+.ecran-client {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: #d9d9d9;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   CADRE PRINCIPAL
+   ========================= */
+
+.client-container {
+    position: relative;
+
+    width: min(1100px, 100%);
+
+    padding: 35px 43px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 25px;
+}
+
+
+/* Fond blanc */
+
+.ecran-client-child {
+    position: absolute;
+    inset: 0;
+
+    background-color: #fff;
+
+    border-radius: 16px;
+
+    z-index: 0;
+}
+
+
+/* Contenu au-dessus du fond */
+
+.header,
+.notes,
+.logout-button {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================
+   TITRE
+   ========================= */
+
+.header {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.client {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 600;
+
+    text-align: center;
+}
+
+
+/* =========================
+   TABLEAU
+   ========================= */
+
+.notes {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background-color: rgba(120, 120, 128, 0.08);
+}
+
+
+/* =========================
+   EN-TÊTE DU TABLEAU
+   ========================= */
+
+.notes-header {
+    display: grid;
+
+    grid-template-columns:
+        1.1fr 1.1fr 0.6fr 2fr 110px;
+
+    align-items: center;
+
+    min-height: 50px;
+
+    padding: 0 20px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    background-color: rgba(120, 120, 128, 0.16);
+}
+
+
+/* =========================
+   LIGNES
+   ========================= */
+
+.service {
+    display: grid;
+
+    grid-template-columns:
+        1.1fr 1.1fr 0.6fr 2fr 110px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 65px;
+
+    padding: 8px 20px;
+
+    font-size: 15px;
+
+    border-top: 1px solid rgba(60, 60, 67, 0.15);
+}
+
+
+/* =========================
+   NOM SERVICE
+   ========================= */
+
+.service-nom {
+    font-weight: 500;
+}
+
+
+/* =========================
+   PRESTATAIRE
+   ========================= */
+
+.prestataire {
+    color: rgba(60, 60, 67, 0.7);
+}
+
+
+/* =========================
+   CHAMP NOTE
+   ========================= */
+
+.note-input {
+    width: 70px;
+
+    padding: 8px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 10px;
+
+    background-color: rgba(120, 120, 128, 0.12);
+
+    font-family: 'SF Pro', sans-serif;
+    font-size: 15px;
+
+    text-align: center;
+}
+
+
+/* =========================
+   CHAMP COMMENTAIRE
+   ========================= */
+
+.commentaire-input {
+    width: 100%;
+
+    padding: 8px 12px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 10px;
+
+    background-color: rgba(120, 120, 128, 0.12);
+
+    font-family: 'SF Pro', sans-serif;
+    font-size: 15px;
+}
+
+
+/* =========================
+   BOUTON SAUVEGARDER
+   ========================= */
+
+.save-button {
+    padding: 9px 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #007aff;
+
+    color: white;
+
+    font-family: 'SF Pro', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.save-button:hover {
+    opacity: 0.85;
+}
+
+.save-button:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================
+   BOUTON DÉCONNEXION
+   ========================= */
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border: 1px solid rgba(60, 60, 67, 0.15);
+    border-radius: 12px;
+
+    background-color: rgba(120, 120, 128, 0.10);
+
+    color: rgba(60, 60, 67, 0.85);
+
+    font-family: 'SF Pro', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.logout-button:hover {
+    background-color: rgba(120, 120, 128, 0.18);
+}
+
+.logout-button:active {
+    transform: scale(0.97);
+}
+
+.logout-icon {
+    font-size: 17px;
+}
+
+
+/* =========================
+   PETITS ÉCRANS
+   ========================= */
+
+@media (max-width: 750px) {
+
+    .ecran-client {
+        padding: 12px;
+    }
+
+    .client-container {
+        padding: 25px 20px;
+    }
+
+    .notes {
+        overflow-x: auto;
+    }
+
+    .notes-header,
+    .service {
+        min-width: 750px;
+    }
+
+}
+
+
+/* =========================
+   TRÈS PETITS ÉCRANS
+   ========================= */
+
+@media (max-width: 450px) {
+
+    .client-container {
+        padding: 20px 12px;
+    }
+
+}
