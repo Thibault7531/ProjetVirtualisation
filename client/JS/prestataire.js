@@ -14,7 +14,7 @@ services.forEach(function (service) {
             this.dataset.service;
 
         window.location.href =
-            "notes_cours.html?service="
+            "evaluation.html?service="
             + numeroService;
     });
 
