@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/etudiant.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro:wght@400;500;600;700&display=swap">
+</head>
+
+<body>
+
+    <div class="ecran-tudiant">
+
+        <main class="etudiant-container">
+
+            <!-- Fond blanc -->
+            <div class="ecran-tudiant-child"></div>
+
+            <!-- En-tête -->
+            <header class="header">
+                <h1 class="etudiant">Etudiant</h1>
+            </header>
+
+            <!-- Tableau des matières -->
+            <section class="notes">
+
+                <!-- En-tête -->
+                <div class="notes-header">
+                    <div>Matières</div>
+                    <div>Professeur</div>
+                    <div>Note</div>
+                    <div>Commentaire</div>
+                    <div></div>
+                </div>
+
+
+                <!-- Matière 1 -->
+                <div class="matiere" data-matiere="1">
+
+                    <div class="matiere-nom">
+                        Matière 1
+                    </div>
+
+                    <div class="professeur">
+                        M. Dupont
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="14.56" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours très bien">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+
+                <!-- Matière 2 -->
+                <div class="matiere" data-matiere="2">
+
+                    <div class="matiere-nom">
+                        Matière 2
+                    </div>
+
+                    <div class="professeur">
+                        Mme Martin
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="18" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours mauvais">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+
+                <!-- Matière 3 -->
+                <div class="matiere" data-matiere="3">
+
+                    <div class="matiere-nom">
+                        Matière 3
+                    </div>
+
+                    <div class="professeur">
+                        M. Bernard
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="12.50" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours à améliorer">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+
+                <!-- Matière 4 -->
+                <div class="matiere" data-matiere="4">
+
+                    <div class="matiere-nom">
+                        Matière 4
+                    </div>
+
+                    <div class="professeur">
+                        Mme Leroy
+                    </div>
+
+                    <div class="note">
+                        <input type="number" class="note-input" value="8" min="0" max="20" step="0.01">
+                    </div>
+
+                    <div class="commentaire">
+                        <input type="text" class="commentaire-input" value="Cours très bien">
+                    </div>
+
+                    <button class="save-button" type="button">
+                        Sauvegarder
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Déconnexion -->
+            <button class="logout-button" id="logoutButton" type="button">
+                <span class="logout-icon">↪</span>
+                <span>Se déconnecter</span>
+            </button>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        // =========================
+        // SAUVEGARDE DES MATIÈRES
+        // =========================
+
+        const boutonsSauvegarde =
+            document.querySelectorAll(".save-button");
+
+        boutonsSauvegarde.forEach(function (bouton) {
+
+            bouton.addEventListener("click", function () {
+
+                const matiere = bouton.closest(".matiere");
+
+                const note =
+                    matiere.querySelector(".note-input").value;
+
+                const commentaire =
+                    matiere.querySelector(".commentaire-input").value;
+
+                // Pour l'instant, on sauvegarde dans le navigateur.
+                localStorage.setItem(
+                    "matiere-" + matiere.dataset.matiere,
+                    JSON.stringify({
+                        note: note,
+                        commentaire: commentaire
+                    })
+                );
+
+                // Petit retour visuel
+                bouton.textContent = "Sauvegardé ✓";
+
+                setTimeout(function () {
+                    bouton.textContent = "Sauvegarder";
+                }, 1500);
+
+            });
+
+        });
+
+
+        // =========================
+        // CHARGEMENT DES DONNÉES
+        // =========================
+
+        document.querySelectorAll(".matiere").forEach(function (matiere) {
+
+            const sauvegarde =
+                localStorage.getItem(
+                    "matiere-" + matiere.dataset.matiere
+                );
+
+            if (sauvegarde) {
+
+                const donnees = JSON.parse(sauvegarde);
+
+                matiere.querySelector(".note-input").value =
+                    donnees.note;
+
+                matiere.querySelector(".commentaire-input").value =
+                    donnees.commentaire;
+            }
+
+        });
+
+
+        // =========================
+        // DÉCONNEXION
+        // =========================
+
+        const boutonDeconnexion =
+            document.getElementById("logoutButton");
+
+        boutonDeconnexion.addEventListener("click", function () {
+
+            window.location.href = "index.html";
+
+        });
+
+    </script>
+
+</body>
+
+</html>

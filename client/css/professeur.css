@@ -1,0 +1,252 @@
+css * {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'SF Pro', sans-serif;
+}
+
+
+/* =========================
+   ÉCRAN
+   ========================= */
+
+.ecran-professeur {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: #d9d9d9;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   CARTE
+   ========================= */
+
+.professeur-container {
+    position: relative;
+
+    width: min(600px, 100%);
+
+    padding: 35px 43px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.ecran-professeur-child {
+    position: absolute;
+    inset: 0;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    z-index: 0;
+}
+
+
+/* =========================
+   TITRE
+   ========================= */
+
+.header {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    z-index: 1;
+}
+
+.professeur {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 600;
+
+    color: #000000;
+
+    text-align: center;
+}
+
+
+/* =========================
+   MATIÈRES
+   ========================= */
+
+.matieres {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    z-index: 1;
+}
+
+
+/* BOUTON MATIÈRE */
+
+.matiere {
+    width: 100%;
+
+    min-height: 60px;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border: 1px solid rgba(60, 60, 67, 0.15);
+
+    border-radius: 14px;
+
+    background-color: rgba(120, 120, 128, 0.08);
+
+    color: #1c1c1e;
+
+    font-family: 'SF Pro', sans-serif;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.matiere:hover {
+    background-color: rgba(120, 120, 128, 0.14);
+}
+
+.matiere:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================
+   DÉCONNEXION
+   ========================= */
+
+.logout-button {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border: 1px solid rgba(60, 60, 67, 0.15);
+
+    border-radius: 12px;
+
+    background-color: rgba(120, 120, 128, 0.10);
+
+    color: rgba(60, 60, 67, 0.85);
+
+    font-family: 'SF Pro', sans-serif;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    z-index: 1;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.logout-button:hover {
+    background-color: rgba(120, 120, 128, 0.16);
+}
+
+.logout-button:active {
+    transform: scale(0.97);
+}
+
+.logout-icon {
+    font-size: 17px;
+    line-height: 1;
+}
+
+
+/* =========================
+   PETIT ÉCRAN
+   ========================= */
+
+@media (max-width: 750px) {
+
+    .ecran-professeur {
+        padding: 12px;
+    }
+
+    .professeur-container {
+        width: 100%;
+
+        padding: 25px 20px 30px;
+
+        gap: 20px;
+    }
+}
+
+
+/* =========================
+   TÉLÉPHONE
+   ========================= */
+
+@media (max-width: 450px) {
+
+    .professeur-container {
+        padding: 25px 15px;
+    }
+
+    .professeur {
+        font-size: 23px;
+    }
+
+    .matiere {
+        min-height: 55px;
+
+        font-size: 15px;
+    }
+
+    .logout-button {
+        width: 100%;
+    }
+}

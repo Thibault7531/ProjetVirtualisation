@@ -1,0 +1,456 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'SF Pro', sans-serif;
+}
+
+
+/* =========================
+   ÉCRAN
+   ========================= */
+
+.ecran-validation {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: #d9d9d9;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   CARTE
+   ========================= */
+
+.validation-container {
+    position: relative;
+
+    width: min(1100px, 100%);
+
+    padding: 35px 43px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.ecran-validation-child {
+    position: absolute;
+    inset: 0;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    z-index: 0;
+}
+
+
+/* =========================
+   TITRE
+   ========================= */
+
+.header {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    z-index: 1;
+}
+
+.validation-titre {
+    margin: 0;
+
+    font-size: 25px;
+    font-weight: 600;
+
+    color: #000000;
+
+    text-align: center;
+}
+
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+.section-comptes {
+    position: relative;
+
+    width: 100%;
+
+    z-index: 1;
+}
+
+.section-titre {
+    margin: 0 0 10px 5px;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    color: #1c1c1e;
+}
+
+
+/* =========================
+   TABLEAU
+   ========================= */
+
+.comptes {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background-color: rgba(120, 120, 128, 0.08);
+}
+
+
+/* EN-TÊTE */
+
+.comptes-header {
+    display: grid;
+
+    grid-template-columns:
+        1.1fr 1.5fr 0.7fr 1.7fr;
+
+    align-items: center;
+
+    min-height: 50px;
+
+    padding: 0 20px;
+
+    background-color: rgba(120, 120, 128, 0.10);
+
+    color: rgba(60, 60, 67, 0.65);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* LISTE */
+
+.liste-comptes {
+    display: flex;
+    flex-direction: column;
+
+    max-height: 300px;
+
+    overflow-y: auto;
+}
+
+
+/* =========================
+   COMPTE
+   ========================= */
+
+.compte {
+    display: grid;
+
+    grid-template-columns:
+        1.1fr 1.5fr 0.7fr 1.7fr;
+
+    align-items: center;
+
+    min-height: 65px;
+
+    padding: 8px 20px;
+
+    gap: 15px;
+
+    border-top: 1px solid rgba(60, 60, 67, 0.15);
+
+    font-size: 15px;
+
+    color: #1c1c1e;
+}
+
+.nom-compte {
+    font-weight: 500;
+}
+
+.email-compte {
+    color: rgba(60, 60, 67, 0.75);
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.type-compte {
+    color: rgba(60, 60, 67, 0.75);
+}
+
+
+/* =========================
+   ACTIONS
+   ========================= */
+
+.actions-compte {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+}
+
+.actions-compte button {
+    padding: 8px 12px;
+
+    border-radius: 10px;
+
+    font-family: 'SF Pro', sans-serif;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.actions-compte button:active {
+    transform: scale(0.96);
+}
+
+
+/* VALIDER */
+
+.button-valider {
+    border: 1px solid rgba(52, 199, 89, 0.25);
+
+    background-color: rgba(52, 199, 89, 0.10);
+
+    color: #248a3d;
+}
+
+.button-valider:hover {
+    background-color: rgba(52, 199, 89, 0.18);
+}
+
+
+/* REFUSER */
+
+.button-refuser {
+    border: 1px solid rgba(255, 59, 48, 0.20);
+
+    background-color: rgba(255, 59, 48, 0.08);
+
+    color: #d70015;
+}
+
+.button-refuser:hover {
+    background-color: rgba(255, 59, 48, 0.15);
+}
+
+
+/* SUPPRIMER */
+
+.button-supprimer {
+    border: 1px solid rgba(60, 60, 67, 0.15);
+
+    background-color: rgba(120, 120, 128, 0.10);
+
+    color: rgba(60, 60, 67, 0.85);
+}
+
+.button-supprimer:hover {
+    background-color: rgba(120, 120, 128, 0.17);
+}
+
+
+/* =========================
+   MESSAGE VIDE
+   ========================= */
+
+.aucun-compte {
+    padding: 25px;
+
+    text-align: center;
+
+    color: rgba(60, 60, 67, 0.60);
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+.liste-comptes::-webkit-scrollbar {
+    width: 8px;
+}
+
+.liste-comptes::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.liste-comptes::-webkit-scrollbar-thumb {
+    background-color: rgba(60, 60, 67, 0.20);
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   DÉCONNEXION
+   ========================= */
+
+.logout-button {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border: 1px solid rgba(60, 60, 67, 0.15);
+
+    border-radius: 12px;
+
+    background-color: rgba(120, 120, 128, 0.10);
+
+    color: rgba(60, 60, 67, 0.85);
+
+    font-family: 'SF Pro', sans-serif;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    z-index: 1;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.logout-button:hover {
+    background-color: rgba(120, 120, 128, 0.16);
+}
+
+.logout-button:active {
+    transform: scale(0.97);
+}
+
+.logout-icon {
+    font-size: 17px;
+    line-height: 1;
+}
+
+
+/* =========================
+   PETIT ÉCRAN
+   ========================= */
+
+@media (max-width: 750px) {
+
+    .ecran-validation {
+        align-items: flex-start;
+
+        padding: 12px;
+    }
+
+    .validation-container {
+        width: 100%;
+
+        padding: 25px 20px 30px;
+
+        gap: 20px;
+    }
+
+    .liste-comptes {
+        max-height: 250px;
+    }
+}
+
+
+/* =========================
+   TÉLÉPHONE
+   ========================= */
+
+@media (max-width: 550px) {
+
+    .validation-container {
+        padding: 25px 15px;
+    }
+
+    .validation-titre {
+        font-size: 22px;
+    }
+
+    .comptes-header {
+        display: none;
+    }
+
+    .compte {
+        display: flex;
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 7px;
+
+        padding: 15px 18px;
+
+        min-height: auto;
+    }
+
+    .email-compte {
+        width: 100%;
+    }
+
+    .actions-compte {
+        width: 100%;
+
+        margin-top: 5px;
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .logout-button {
+        width: 100%;
+    }
+}

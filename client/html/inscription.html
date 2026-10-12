@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/inscription.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro:wght@400;500;600&display=swap">
+</head>
+
+<body>
+
+    <div class="ecran-inscription">
+
+        <main class="inscription-container">
+
+            <!-- Fond blanc -->
+            <div class="ecran-inscription-child"></div>
+
+            <!-- Titre -->
+            <h1 class="inscription">
+                Inscription
+            </h1>
+
+            <!-- Type de compte -->
+            <div class="type-compte">
+
+                <button type="button" class="type-compte-button" id="typeCompteButton">
+
+                    <span id="typeCompteTexte">Étudiant</span>
+                    <span class="fleche"></span>
+
+                </button>
+
+                <div class="type-compte-menu" id="typeCompteMenu">
+
+                    <button type="button" data-type="etudiant">
+                        Étudiant
+                    </button>
+
+                    <button type="button" data-type="professeur">
+                        Professeur
+                    </button>
+
+                    <button type="button" data-type="admin">
+                        Admin
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Formulaire -->
+            <form class="formulaire-inscription" id="formulaireInscription">
+
+
+                <!-- Nom / Prénom -->
+                <div class="champs-ligne">
+
+                    <div class="input-container">
+                        <input type="text" id="nom" class="input-field" placeholder="Nom" autocomplete="family-name"
+                            required>
+                    </div>
+
+                    <div class="input-container">
+                        <input type="text" id="prenom" class="input-field" placeholder="Prénom"
+                            autocomplete="given-name" required>
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="input-container">
+                    <input type="email" id="email" class="input-field" placeholder="Email" autocomplete="email"
+                        required>
+                </div>
+
+
+                <!-- Identifiant -->
+                <div class="input-container">
+                    <input type="text" id="identifiant" class="input-field" placeholder="Identifiant"
+                        autocomplete="username" required>
+                </div>
+
+
+                <!-- Mot de passe -->
+                <div class="input-container">
+                    <input type="password" id="motDePasse" class="input-field" placeholder="Mot de passe"
+                        autocomplete="new-password" required>
+                </div>
+
+
+                <!-- Message d'erreur -->
+                <div id="erreur-inscription" class="erreur-inscription">
+                </div>
+
+
+                <!-- Bouton inscription -->
+                <button class="button-liquid-glass-text" id="buttonLiquidGlassText" type="submit">
+
+                    <div class="bg">
+                        <div class="fill-shadow"></div>
+                        <div class="white-backing"></div>
+                        <div class="tint"></div>
+                        <div class="glass-effect"></div>
+                    </div>
+
+                    <div class="text">
+                        <div class="symbol">
+                            S'inscrire
+                        </div>
+                    </div>
+
+                </button>
+
+            </form>
+
+
+            <!-- Retour connexion -->
+            <button type="button" class="retour-connexion" id="retourConnexion">
+
+                Retour à la connexion
+
+            </button>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        // =========================
+        // TYPE DE COMPTE
+        // =========================
+
+        const typeCompteButton =
+            document.getElementById("typeCompteButton");
+
+        const typeCompteMenu =
+            document.getElementById("typeCompteMenu");
+
+        const typeCompteTexte =
+            document.getElementById("typeCompteTexte");
+
+        let typeCompte = "etudiant";
+
+
+        // Ouvrir / fermer le menu
+
+        typeCompteButton.addEventListener("click", function () {
+
+            typeCompteMenu.classList.toggle("visible");
+
+        });
+
+
+        // Choix d'un type
+
+        typeCompteMenu
+            .querySelectorAll("button")
+            .forEach(function (bouton) {
+
+                bouton.addEventListener("click", function () {
+
+                    typeCompte = bouton.dataset.type;
+
+                    typeCompteTexte.textContent =
+                        bouton.textContent.trim();
+
+                    typeCompteMenu.classList.remove("visible");
+
+                });
+
+            });
+
+
+        // Fermer le menu si on clique ailleurs
+
+        document.addEventListener("click", function (event) {
+
+            if (!typeCompteButton.contains(event.target) &&
+                !typeCompteMenu.contains(event.target)) {
+
+                typeCompteMenu.classList.remove("visible");
+
+            }
+
+        });
+
+
+        // =========================
+        // INSCRIPTION
+        // =========================
+
+        const formulaire =
+            document.getElementById("formulaireInscription");
+
+        const erreur =
+            document.getElementById("erreur-inscription");
+
+
+        formulaire.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+
+            const nom =
+                document.getElementById("nom").value.trim();
+
+            const prenom =
+                document.getElementById("prenom").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const identifiant =
+                document.getElementById("identifiant").value.trim();
+
+            const motDePasse =
+                document.getElementById("motDePasse").value;
+
+
+            // Vérification
+
+            if (
+                !nom ||
+                !prenom ||
+                !email ||
+                !identifiant ||
+                !motDePasse
+            ) {
+
+                erreur.textContent =
+                    "Veuillez remplir tous les champs.";
+
+                erreur.style.display = "block";
+
+                return;
+            }
+
+
+            // Sauvegarde provisoire
+
+            const utilisateur = {
+
+                nom: nom,
+                prenom: prenom,
+                email: email,
+                identifiant: identifiant,
+                motDePasse: motDePasse,
+                typeCompte: typeCompte
+
+            };
+
+
+            localStorage.setItem(
+                "utilisateur",
+                JSON.stringify(utilisateur)
+            );
+
+
+            // Retour à la connexion
+
+            window.location.href = "index.html";
+
+        });
+
+
+        // =========================
+        // RETOUR À LA CONNEXION
+        // =========================
+
+        const retourConnexion =
+            document.getElementById("retourConnexion");
+
+        retourConnexion.addEventListener("click", function () {
+
+            window.location.href = "index.html";
+
+        });
+
+    </script>
+
+</body>
+
+</html>

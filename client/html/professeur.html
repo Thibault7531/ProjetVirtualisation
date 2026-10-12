@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/professeur.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro:wght@400;500;600;700&display=swap">
+</head>
+
+<body>
+
+    <div class="ecran-professeur">
+
+        <main class="professeur-container">
+
+            <div class="ecran-professeur-child"></div>
+
+            <header class="header">
+                <h1 class="professeur">
+                    Professeur
+                </h1>
+            </header>
+
+
+            <section class="matieres">
+
+                <button class="matiere" type="button" data-matiere="1">
+                    Matière 1
+                </button>
+
+                <button class="matiere" type="button" data-matiere="2">
+                    Matière 2
+                </button>
+
+                <button class="matiere" type="button" data-matiere="3">
+                    Matière 3
+                </button>
+
+            </section>
+
+
+            <button class="logout-button" id="logoutButton" type="button">
+
+                <span class="logout-icon">↪</span>
+
+                <span>Se déconnecter</span>
+
+            </button>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        /*
+         * Ouverture de la page des notes
+         * correspondant à la matière sélectionnée.
+         */
+
+        const matieres =
+            document.querySelectorAll(".matiere");
+
+        matieres.forEach(function (matiere) {
+
+            matiere.addEventListener("click", function () {
+
+                const numeroMatiere =
+                    this.dataset.matiere;
+
+                window.location.href =
+                    "notes_cours.html?matiere="
+                    + numeroMatiere;
+            });
+
+        });
+
+
+        /*
+         * Déconnexion
+         */
+
+        const logoutButton =
+            document.getElementById("logoutButton");
+
+        logoutButton.addEventListener("click", function () {
+
+            window.location.href = "index.html";
+
+        });
+
+    </script>
+
+</body>
+
+</html>

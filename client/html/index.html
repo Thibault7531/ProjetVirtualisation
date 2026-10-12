@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+
+    <link rel="stylesheet" href="../css/index.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro:wght@400;500;600&display=swap">
+
+
+</head>
+
+<body>
+
+
+    <div class="ecran-connexion">
+
+        <div class="connexion-container">
+
+            <div class="ecran-connexion-child"></div>
+
+            <div class="connexion">Connexion</div>
+
+            <div class="text-fields">
+
+                <!-- Identifiant -->
+                <div class="input-container">
+                    <input type="text" id="identifiant" class="input-field" placeholder="Identifiant"
+                        autocomplete="username">
+                </div>
+
+                <!-- Mot de passe -->
+                <div class="input-container">
+                    <input type="password" id="motDePasse" class="input-field" placeholder="Mot de passe"
+                        autocomplete="current-password">
+                </div>
+
+            </div>
+
+            <!-- Message d'erreur -->
+            <div id="erreur-connexion" class="erreur-connexion">
+                Identifiant ou mot de passe incorrect.
+            </div>
+
+            <div class="buttons">
+
+                <!-- Bouton Se connecter -->
+                <div class="button-liquid-glass-text" id="buttonLiquidGlassText">
+                    <div class="bg">
+                        <div class="fill-shadow"></div>
+                        <div class="white-backing"></div>
+                        <div class="tint"></div>
+                        <div class="glass-effect"></div>
+                    </div>
+
+                    <div class="text">
+                        <div class="symbol">Se connecter</div>
+                    </div>
+                </div>
+
+                <!-- Bouton Inscription -->
+                <div class="button-liquid-glass-text2" id="buttonLiquidGlassText1">
+                    <div class="bg">
+                        <div class="fill-shadow2"></div>
+                        <div class="glass-effect"></div>
+                    </div>
+
+                    <div class="text">
+                        <div class="symbol2">Inscription</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // =========================
+        // CONNEXION
+        // =========================
+
+        const boutonConnexion = document.getElementById("buttonLiquidGlassText");
+
+        boutonConnexion.addEventListener("click", function () {
+
+            const identifiant = document.getElementById("identifiant").value;
+            const motDePasse = document.getElementById("motDePasse").value;
+
+            const erreur = document.getElementById("erreur-connexion");
+
+            // =========================
+            // COMPTES TEMPORAIRES DE TEST
+            // =========================
+
+            // Étudiant
+            if (identifiant === "d25024703" && motDePasse === "mdp") {
+
+                window.location.href = "etudiant.html";
+                return;
+            }
+
+            // Professeur
+            if (identifiant === "professeur" && motDePasse === "mdp") {
+
+                window.location.href = "professeur.html";
+                return;
+            }
+
+            // Admin
+            if (identifiant === "admin" && motDePasse === "mdp") {
+
+                window.location.href = "validation.html";
+                return;
+            }
+
+            // =========================
+            // IDENTIFIANTS INCORRECTS
+            // =========================
+
+            erreur.style.display = "block";
+        });
+
+
+        // =========================
+        // INSCRIPTION
+        // =========================
+
+        const boutonInscription = document.getElementById("buttonLiquidGlassText1");
+
+        boutonInscription.addEventListener("click", function () {
+
+            window.location.href = "inscription.html";
+
+        });
+
+
+        // =========================
+        // VALIDATION AVEC ENTRÉE
+        // =========================
+
+        document.addEventListener("keydown", function (event) {
+
+            if (event.key === "Enter") {
+                boutonConnexion.click();
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
