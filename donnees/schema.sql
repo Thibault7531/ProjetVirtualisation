@@ -14,33 +14,32 @@ CREATE TABLE COMPTE (
     UNIQUE (login)
 );
 
-CREATE TABLE ENSEIGNANT (
-    id_enseignant INT PRIMARY KEY,
+CREATE TABLE PRESTATAIRE (
+    id_prestataire INT PRIMARY KEY,
     nom CHAR(255),
     prenom CHAR(255),
     email CHAR(255)
 );
 
-CREATE TABLE ETUDIANT (
-    id_etudiant INT PRIMARY KEY,
+CREATE TABLE CLIENT (
+    id_client INT PRIMARY KEY,
     nom CHAR(255),
     prenom CHAR(255),
     email CHAR(255)
 );
 
-CREATE TABLE COURS (
-    id_cours INT PRIMARY KEY,
-    code CHAR(255),
+CREATE TABLE SERVICE (
+    id_service INT PRIMARY KEY,
     intitule CHAR(255),
-    id_enseignant INT,
-    CONSTRAINT FOREIGN KEY (id_enseignant) REFERENCES ENSEIGNANT(id_enseignant)
+    id_prestataire INT,
+    CONSTRAINT FOREIGN KEY (id_prestataire) REFERENCES PRESTATAIRE(id_prestataire)
 );
 
 CREATE TABLE NOTE (
-    id_etudiant INT NOT NULL,
-    id_cours INT NOT NULL,
+    id_client INT NOT NULL,
+    id_service INT NOT NULL,
     valeur INT,
     commentaire CHAR(255),
-    PRIMARY KEY (id_etudiant, id_cours),
+    PRIMARY KEY (id_client, id_service),
     CONSTRAINT CHECK (valeur <= 20 AND valeur >= 0)
 )
