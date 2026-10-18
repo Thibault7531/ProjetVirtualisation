@@ -2,40 +2,11 @@ USE ProjetVirt;
 
 
 -- =========================================================
--- PRESTATAIRES
--- =========================================================
-
-INSERT INTO PRESTATAIRE
-    (id_prestataire, nom, prenom, email)
-VALUES
-    (1, 'Dupont', 'Jean', 'jean.dupont@example.com'),
-    (2, 'Martin', 'Sophie', 'sophie.martin@example.com'),
-    (3, 'Bernard', 'Lucas', 'lucas.bernard@example.com'),
-    (4, 'Petit', 'Emma', 'emma.petit@example.com'),
-    (5, 'Robert', 'Thomas', 'thomas.robert@example.com');
-
-
--- =========================================================
--- CLIENTS
--- =========================================================
-
-INSERT INTO CLIENT
-    (id_client, nom, prenom, email)
-VALUES
-    (1, 'Durand', 'Alice', 'alice.durand@example.com'),
-    (2, 'Moreau', 'Hugo', 'hugo.moreau@example.com'),
-    (3, 'Leroy', 'Chloé', 'chloe.leroy@example.com'),
-    (4, 'Simon', 'Nathan', 'nathan.simon@example.com'),
-    (5, 'Laurent', 'Léa', 'lea.laurent@example.com'),
-    (6, 'Michel', 'Louis', 'louis.michel@example.com');
-
-
--- =========================================================
 -- COMPTES
 -- =========================================================
 
 INSERT INTO COMPTE
-    (id_compte, login, mot_de_passe_hash, role, statut, id_personne)
+(id_compte, login, mot_de_passe_hash, role, statut, id_personne)
 VALUES
     -- Prestataires
     (1, 'jdupont', 'hash123', 'PRESTATAIRE', 'VALIDE', 1),
@@ -50,7 +21,39 @@ VALUES
     (8, 'cleroy', 'hash333', 'CLIENT', 'VALIDE', 3),
     (9, 'nsimon', 'hash444', 'CLIENT', 'VALIDE', 4),
     (10, 'llaurent', 'hash555', 'CLIENT', 'VALIDE', 5),
-    (11, 'lmichel', 'hash666', 'CLIENT', 'VALIDE', 6);
+    (11, 'lmichel', 'hash666', 'CLIENT', 'VALIDE', 6),
+
+    -- Admins
+    (12, 'admin', 'hash999', 'ADMIN', 'VALIDE', 999);
+
+
+-- =========================================================
+-- PRESTATAIRES
+-- =========================================================
+
+INSERT INTO PRESTATAIRE
+    (id_prestataire, id_compte, nom, prenom, email)
+VALUES
+    (1, 1, 'Dupont', 'Jean', 'jean.dupont@example.com'),
+    (2, 2, 'Martin', 'Sophie', 'sophie.martin@example.com'),
+    (3, 3, 'Bernard', 'Lucas', 'lucas.bernard@example.com'),
+    (4, 4, 'Petit', 'Emma', 'emma.petit@example.com'),
+    (5, 5, 'Robert', 'Thomas', 'thomas.robert@example.com');
+
+
+-- =========================================================
+-- CLIENTS
+-- =========================================================
+
+INSERT INTO CLIENT
+    (id_client, id_compte, nom, prenom, email)
+VALUES
+    (1, 6, 'Durand', 'Alice', 'alice.durand@example.com'),
+    (2, 7, 'Moreau', 'Hugo', 'hugo.moreau@example.com'),
+    (3, 8, 'Leroy', 'Chloé', 'chloe.leroy@example.com'),
+    (4, 9, 'Simon', 'Nathan', 'nathan.simon@example.com'),
+    (5, 10, 'Laurent', 'Léa', 'lea.laurent@example.com'),
+    (6, 11, 'Michel', 'Louis', 'louis.michel@example.com');
 
 
 -- =========================================================

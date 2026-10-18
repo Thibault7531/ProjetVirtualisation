@@ -21,5 +21,10 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.login),
-    path('register/', views.register)
+    path('register/', views.register),
+    path('notes/', views.getGrades),
+    path('services/', views.getService),
+    path('services/<int:service_id>/notes', views.getServiceGrades),
+    path('compte-en-attente', views.getAccountPendingValidation),
+    path('valider-compte', views.validateAccount)
 ]
