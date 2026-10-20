@@ -9,19 +9,19 @@ INSERT INTO COMPTE
 (id_compte, login, mot_de_passe_hash, role, statut)
 VALUES
     -- Prestataires
-    (1, 'jdupont', 'hash123', 'PRESTATAIRE', 'VALIDE'),
-    (2, 'smartin', 'hash456', 'PRESTATAIRE', 'VALIDE'),
-    (3, 'lbernard', 'hash789', 'PRESTATAIRE', 'VALIDE'),
-    (4, 'epetit', 'hash012', 'PRESTATAIRE', 'VALIDE'),
-    (5, 'trobert', 'hash345', 'PRESTATAIRE', 'VALIDE'),
+    (1, 'jdupont', 'pbkdf2_sha256$1500000$FNw8a6UJXVKNva8IbLqhRl$VLX6nCebcEOop961CVrpau3lT45aie2oTijnvzhzRng=', 'PRESTATAIRE', 'VALIDE'),
+    (2, 'smartin', 'pbkdf2_sha256$1500000$W829FNytHRYk2f1OdLaIEM$hPfLAdA/nD7CDBmYTBpXrhpMtuVooaUvjI9g3KxNEIE=', 'PRESTATAIRE', 'VALIDE'),
+    (3, 'lbernard', 'pbkdf2_sha256$1500000$iYnffNvF4cWrEzt7BDXMps$UKFuTZIwBYwHAz5uwXjtXLkg4o31m8RC3asezFNiU/M=', 'PRESTATAIRE', 'VALIDE'),
+    (4, 'epetit', 'pbkdf2_sha256$1500000$wRtx0pqWPOWHHoNjT3sO4D$xzcu6JZqyQ0rhYfn9yn+m60560gPbTteqhuf9NwpwIQ=', 'PRESTATAIRE', 'VALIDE'),
+    (5, 'trobert', 'pbkdf2_sha256$1500000$LULmawIjHxPJdP7sOHB8Cb$0uvkvIzSV6LpZJhg4TGL1wqL7Y84ZhSuBCqjM0Pwlyw=', 'PRESTATAIRE', 'VALIDE'),
 
     -- Clients
-    (6, 'adurand', 'hash111', 'CLIENT', 'VALIDE'),
-    (7, 'hmoreau', 'hash222', 'CLIENT', 'VALIDE'),
-    (8, 'cleroy', 'hash333', 'CLIENT', 'VALIDE'),
-    (9, 'nsimon', 'hash444', 'CLIENT', 'VALIDE'),
-    (10, 'llaurent', 'hash555', 'CLIENT', 'VALIDE'),
-    (11, 'lmichel', 'hash666', 'CLIENT', 'VALIDE'),
+    (6, 'adurand', 'pbkdf2_sha256$1500000$0RJSIecplHQTjNVsCEU1px$dTVHSihNmWuxcTqSsY3RjDwRLjiqcH1UEU4US/aHdeA=', 'CLIENT', 'VALIDE'),
+    (7, 'hmoreau', 'pbkdf2_sha256$1500000$0UlnIsuN6YBLnnD4T27p6j$V9omIb4h28QqvBEFDfxfjphKR/LeVRB4iUnaRrIniAc=', 'CLIENT', 'VALIDE'),
+    (8, 'cleroy', 'pbkdf2_sha256$1500000$lh79arzEnQZpIEIqnYRlls$BxSbD2qsNudTwSr6QGdjms7/OYUv4begbGRH7E8Yyfo=', 'CLIENT', 'VALIDE'),
+    (9, 'nsimon', 'pbkdf2_sha256$1500000$ketlnejtFidZOMDvgVLhwf$0NKWDqkVYt18qPou3ub8UW/6nD6yrlaWtM8BFnLFmrk=', 'CLIENT', 'VALIDE'),
+    (10, 'llaurent', 'pbkdf2_sha256$1500000$Wsobot9fzD2WGKEXMN4kSH$kzGHrR4FFEHteYH3qZZsBiR15AKms4m7XZalgd34lJ8=', 'CLIENT', 'VALIDE'),
+    (11, 'lmichel', 'pbkdf2_sha256$1500000$21lZM2IrBrX9FR9pXCWIsv$ELJIJTAaOxno5/pwlvYFKebgS76bWCIlubXfMng0Yks=', 'CLIENT', 'VALIDE'),
 
     -- Admins
     (12, 'admin', 'hash999', 'ADMIN', 'VALIDE');
