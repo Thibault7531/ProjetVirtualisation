@@ -103,49 +103,78 @@ def register(request):
     return JsonResponse(data)
 
 def getGrades(request):
-    compte = compte_connecte(request)
+    login = request.GET.get('login')
+    password = request.GET.get('password')
+    test = request.GET.get('test')
 
-    if compte is None:
-        return JsonResponse(
-            {"message": "Utilisateur non connecté"},
-            status=401
-        )
+    if login == '' or password == '':
+        data = {
+            "status": "error",
+            "message": "Username or password cannot be empty"
+        }
+        return JsonResponse(data)
 
-    if compte.role.upper() != "CLIENT":
-        return JsonResponse(
-            {"message": "Accès réservé aux clients"},
-            status=403
-        )
+    item = Compte.objects.filter(login=login)
 
-    try:
-        client = Client.objects.get(id_compte=compte.id_compte)
-    except Client.DoesNotExist:
-        return JsonResponse(
-            {"message": "Profil client introuvable"},
-            status=404
-        )
+    if not item.exists():
+        data = {
+            "status": "error",
+            "message": "Account not found"
+        }
+        return JsonResponse(data)
+
+    account = item.first()
+
+    if account.statut == 'NONVALIDE':
+        data = {
+            "status": "error",
+            "message": "Account not validated"
+        }
+        return JsonResponse(data)
+
+    if test == 0:
+        if not check_password(password, account.mot_de_passe_hash):
+            data = {
+                "status": "error",
+                "message": "Invalid password"
+            }
+            return JsonResponse(data)
+    elif test == 1:
+        if not password == account.mot_de_passe_hash:
+            data = {
+                "status": "error",
+                "message": "Invalid password"
+            }
+            return JsonResponse(data)
+
+    client = Client.objects.filter(id_compte=account.id_compte).first()
+    if not client:
+        data = {
+            "status": "error",
+            "message": "Client not found"
+        }
+        return JsonResponse(data)
 
     notes = Note.objects.filter(id_client=client.id_client)
-
-    resultat = []
-
+    data = {
+        "status": "success",
+        "message": "Notes retrieved successfully",
+        "notes": []
+    }
     for note in notes:
-        service = Service.objects.get(id_service=note.id_service)
-        prestataire = Prestataire.objects.get(
-            id_prestataire=service.id_prestataire
-        )
-
-        resultat.append({
-            "id_service": service.id_service,
-            "intitule": service.intitule,
+        service = Service.objects.filter(id_service=note.id_service).first()
+        prestataire = Prestataire.objects.filter(id_prestataire=service.id_prestataire).first()
+        data["notes"].append({
+            "id_client": note.id_client,
             "id_prestataire": prestataire.id_prestataire,
             "nom_prestataire": prestataire.nom,
             "prenom_prestataire": prestataire.prenom,
+            "id_service": service.id_service,
+            "intitule": service.intitule,
             "note": note.valeur,
             "commentaire": note.commentaire
         })
-
-    return JsonResponse({"notes": resultat})
+    return JsonResponse(data)
 
 def getService(request):
     # Vérifier que l'utilisateur est connecté

@@ -37,7 +37,7 @@ async function chargerServicesClient() {
         }
 
         // Récupérer les notes déjà laissées par le client
-        const notesReponse = await fetch(`/api/notes/`, {
+        const notesReponse = await fetch(`/api/notes?login=${localStorage.getItem("login")}&password=${localStorage.getItem("password")}`, {
             credentials: "include"
         });
 

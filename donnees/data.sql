@@ -24,7 +24,7 @@ VALUES
     (11, 'lmichel', 'pbkdf2_sha256$1500000$21lZM2IrBrX9FR9pXCWIsv$ELJIJTAaOxno5/pwlvYFKebgS76bWCIlubXfMng0Yks=', 'CLIENT', 'VALIDE'),
 
     -- Admins
-    (12, 'admin', 'hash999', 'ADMIN', 'VALIDE');
+    (12, 'admin', 'pbkdf2_sha256$1500000$h72p09BFy1qmUyl9k9x4qL$wo2T56i/gwrl7IdxlB0JxT6kLa2KhYXp0XbLZifufqA=', 'ADMIN', 'VALIDE');
 
 
 -- =========================================================
