@@ -1,11 +1,4 @@
 // =========================
-// CONFIGURATION API
-// =========================
-
-const API_URL = "http://127.0.0.1:8000";
-
-
-// =========================
 // CONNEXION
 // =========================
 
@@ -48,7 +41,7 @@ boutonConnexion.addEventListener("click", async function () {
         // Appel de l'API Django
 
         const response = await fetch(
-            `${API_URL}/api/login/?username=${encodeURIComponent(identifiant)}&password=${encodeURIComponent(motDePasse)}`
+            `/api/login/?username=${encodeURIComponent(identifiant)}&password=${encodeURIComponent(motDePasse)}`
         );
 
 

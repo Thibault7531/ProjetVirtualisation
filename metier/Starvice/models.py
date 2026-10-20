@@ -6,7 +6,6 @@ class Compte(models.Model):
     mot_de_passe_hash = models.CharField(max_length=255)
     role = models.CharField(max_length=255)
     statut = models.CharField(max_length=255)
-    id_personne = models.IntegerField()
 
     class Meta:
         managed = False

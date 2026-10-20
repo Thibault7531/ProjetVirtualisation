@@ -1,11 +1,4 @@
 // =========================
-// CONFIGURATION API
-// =========================
-
-const API_URL = "http://127.0.0.1:8000";
-
-
-// =========================
 // TYPE DE COMPTE
 // =========================
 
@@ -154,7 +147,7 @@ formulaire.addEventListener("submit", async function (event) {
 
 
         const response = await fetch(
-            `${API_URL}/api/register/?${params.toString()}`
+            `/api/register/?${params.toString()}`
         );
 
 

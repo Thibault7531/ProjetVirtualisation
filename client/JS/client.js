@@ -1,5 +1,3 @@
-const API_URL = "http://127.0.0.1:8000";
-
 const boutonDeconnexion = document.getElementById("logoutButton");
 
 async function chargerServicesClient() {
@@ -26,7 +24,7 @@ async function chargerServicesClient() {
 
     try {
         // Récupérer les services disponibles
-        const reponse = await fetch(`${API_URL}/api/catalogue-services/`, {
+        const reponse = await fetch(`/api/catalogue-services/`, {
             credentials: "include"
         });
 
@@ -39,7 +37,7 @@ async function chargerServicesClient() {
         }
 
         // Récupérer les notes déjà laissées par le client
-        const notesReponse = await fetch(`${API_URL}/api/notes/`, {
+        const notesReponse = await fetch(`/api/notes/`, {
             credentials: "include"
         });
 
@@ -144,7 +142,7 @@ async function chargerServicesClient() {
 
                 try {
                     const resultat = await fetch(
-                        `${API_URL}/api/enregistrer-note/`,
+                        `/api/enregistrer-note/`,
                         {
                             method: "POST",
                             credentials: "include",

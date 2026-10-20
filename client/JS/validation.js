@@ -1,5 +1,3 @@
-const API_URL = "http://127.0.0.1:8000";
-
 const listeAttente = document.getElementById("listeAttente");
 const listeValides = document.getElementById("listeValides");
 const boutonDeconnexion = document.getElementById("logoutButton");
@@ -13,7 +11,7 @@ async function chargerComptes() {
     }
 
     try {
-        const reponse = await fetch(`${API_URL}/api/compte-en-attente`, {
+        const reponse = await fetch(`/api/compte-en-attente`, {
             credentials: "include"
         });
 

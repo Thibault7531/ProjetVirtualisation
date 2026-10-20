@@ -1,5 +1,3 @@
-const API_URL = "http://127.0.0.1:8000";
-
 const listeServices = document.querySelector(".services");
 const boutonDeconnexion = document.getElementById("logoutButton");
 
@@ -15,7 +13,7 @@ async function chargerServices() {
     listeServices.innerHTML = "<p>Chargement des services...</p>";
 
     try {
-        const reponse = await fetch(`${API_URL}/api/services/`, {
+        const reponse = await fetch(`/api/services/`, {
             method: "GET",
             credentials: "include"
         });

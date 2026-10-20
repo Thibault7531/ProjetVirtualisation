@@ -1,5 +1,3 @@
-const API_URL = "http://127.0.0.1:8000";
-
 const listeClients = document.querySelector(".liste-clients");
 const titreService = document.querySelector(".service-titre");
 const noteMoyenne = document.getElementById("noteMoyenne");
@@ -19,7 +17,7 @@ async function chargerEvaluations() {
 
     try {
         const reponse = await fetch(
-            `${API_URL}/api/services/${encodeURIComponent(idService)}/notes`,
+            `/api/services/${encodeURIComponent(idService)}/notes`,
             { credentials: "include" }
         );
 
