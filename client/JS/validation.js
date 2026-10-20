@@ -1,386 +1,104 @@
-/* =========================
-           COMPTES DE DÉMONSTRATION
-           ========================= */
+const API_URL = "http://127.0.0.1:8000";
 
-const comptesAttenteParDefaut = [
-    {
-        id: 1,
-        nom: "Prestataire 1",
-        email: "Prestataire1@gmail.com",
-        type: "Prestataire"
-    },
-    {
-        id: 2,
-        nom: "Prestataire 2",
-        email: "Prestataire2@gmail.com",
-        type: "Prestataire"
-    },
-    {
-        id: 3,
-        nom: "Client 1",
-        email: "Client1@gmail.com",
-        type: "Étudiant"
-    },
-    {
-        id: 4,
-        nom: "Client 2",
-        email: "Client2@gmail.com",
-        type: "Étudiant"
-    },
-    {
-        id: 5,
-        nom: "Client 3",
-        email: "Client3@gmail.com",
-        type: "Étudiant"
-    }
-];
+const listeAttente = document.getElementById("listeAttente");
+const listeValides = document.getElementById("listeValides");
+const boutonDeconnexion = document.getElementById("logoutButton");
 
+async function chargerComptes() {
+    const role = localStorage.getItem("role");
 
-/* =========================
-   RÉCUPÉRATION DES COMPTES
-   ========================= */
-
-let comptesAttente =
-    JSON.parse(
-        localStorage.getItem("comptesEnAttente")
-    );
-
-let comptesValides =
-    JSON.parse(
-        localStorage.getItem("comptesValides")
-    ) || [];
-
-
-if (!comptesAttente) {
-
-    comptesAttente =
-        comptesAttenteParDefaut;
-
-    localStorage.setItem(
-        "comptesEnAttente",
-        JSON.stringify(comptesAttente)
-    );
-}
-
-
-/* =========================
-   AFFICHAGE
-   ========================= */
-
-function afficherComptes() {
-
-    afficherComptesAttente();
-    afficherComptesValides();
-}
-
-
-/* =========================
-   COMPTES EN ATTENTE
-   ========================= */
-
-function afficherComptesAttente() {
-
-    const liste =
-        document.getElementById("listeAttente");
-
-    liste.innerHTML = "";
-
-
-    if (comptesAttente.length === 0) {
-
-        const message =
-            document.createElement("div");
-
-        message.className = "aucun-compte";
-
-        message.textContent =
-            "Aucun compte en attente.";
-
-        liste.appendChild(message);
-
+    if (!role || role.toUpperCase() !== "ADMIN") {
+        window.location.href = "index.html";
         return;
     }
 
+    try {
+        const reponse = await fetch(`${API_URL}/compte-en-attente`, {
+            credentials: "include"
+        });
 
-    comptesAttente.forEach(function (compte) {
+        const donnees = await reponse.json();
 
-        const ligne =
-            document.createElement("div");
+        if (!reponse.ok) {
+            throw new Error(donnees.message || "Impossible de charger les comptes.");
+        }
 
-        ligne.className = "compte";
+        afficherComptes(
+            listeAttente,
+            donnees.comptes_en_attente || [],
+            true
+        );
 
-        ligne.innerHTML = `
-
-                    <div class="nom-compte">
-                        ${compte.nom}
-                    </div>
-
-                    <div class="email-compte">
-                        ${compte.email}
-                    </div>
-
-                    <div class="type-compte">
-                        ${compte.type}
-                    </div>
-
-                    <div class="actions-compte">
-
-                        <button
-                            class="button-valider"
-                            type="button"
-                            data-id="${compte.id}">
-                            Valider
-                        </button>
-
-                        <button
-                            class="button-refuser"
-                            type="button"
-                            data-id="${compte.id}">
-                            Refuser
-                        </button>
-
-                    </div>
-                `;
-
-        liste.appendChild(ligne);
-    });
-
-
-    ajouterEvenementsAttente();
+        afficherComptes(
+            listeValides,
+            donnees.comptes_valides || [],
+            false
+        );
+    } catch (erreur) {
+        console.error(erreur);
+        listeAttente.textContent = "Impossible de charger les comptes.";
+    }
 }
 
+function afficherComptes(conteneur, comptes, enAttente) {
+    conteneur.innerHTML = "";
 
-/* =========================
-   COMPTES VALIDÉS
-   ========================= */
-
-function afficherComptesValides() {
-
-    const liste =
-        document.getElementById("listeValides");
-
-    liste.innerHTML = "";
-
-
-    if (comptesValides.length === 0) {
-
-        const message =
-            document.createElement("div");
-
-        message.className = "aucun-compte";
-
-        message.textContent =
-            "Aucun compte validé.";
-
-        liste.appendChild(message);
-
+    if (comptes.length === 0) {
+        conteneur.textContent = enAttente
+            ? "Aucun compte en attente."
+            : "Aucun compte validé.";
         return;
     }
 
+    comptes.forEach(compte => {
+        const ligne = document.createElement("div");
+        ligne.classList.add("compte");
 
-    comptesValides.forEach(function (compte) {
+        const informations = document.createElement("p");
+        informations.textContent =
+            `${compte.prenom} ${compte.nom} — ${compte.email} (${compte.role})`;
 
-        const ligne =
-            document.createElement("div");
+        ligne.appendChild(informations);
 
-        ligne.className = "compte";
+        if (enAttente) {
+            const boutonValider = document.createElement("button");
+            boutonValider.textContent = "Valider";
 
-        ligne.innerHTML = `
+            boutonValider.addEventListener("click", async () => {
+                try {
+                    const url = new URL(`${API_URL}/valider-compte`);
+                    url.searchParams.set("account_id", compte.id_compte);
 
-                    <div class="nom-compte">
-                        ${compte.nom}
-                    </div>
+                    const resultat = await fetch(url, {
+                        credentials: "include"
+                    });
 
-                    <div class="email-compte">
-                        ${compte.email}
-                    </div>
+                    const retour = await resultat.json();
 
-                    <div class="type-compte">
-                        ${compte.type}
-                    </div>
+                    if (!resultat.ok || retour.status === "error") {
+                        alert(retour.message || "Validation impossible.");
+                        return;
+                    }
 
-                    <div class="actions-compte">
+                    await chargerComptes();
+                } catch (erreur) {
+                    console.error(erreur);
+                    alert("Impossible de contacter Django.");
+                }
+            });
 
-                        <button
-                            class="button-supprimer"
-                            type="button"
-                            data-id="${compte.id}">
-                            Supprimer
-                        </button>
+            ligne.appendChild(boutonValider);
+        }
 
-                    </div>
-                `;
-
-        liste.appendChild(ligne);
+        conteneur.appendChild(ligne);
     });
-
-
-    ajouterEvenementsValides();
 }
 
+boutonDeconnexion.addEventListener("click", () => {
+    localStorage.removeItem("id_compte");
+    localStorage.removeItem("role");
+    localStorage.removeItem("login");
+    window.location.href = "index.html";
+});
 
-/* =========================
-   BOUTONS EN ATTENTE
-   ========================= */
-
-function ajouterEvenementsAttente() {
-
-    document
-        .querySelectorAll(".button-valider")
-        .forEach(function (bouton) {
-
-            bouton.addEventListener(
-                "click",
-                function () {
-
-                    const id =
-                        Number(this.dataset.id);
-
-                    validerCompte(id);
-                }
-            );
-        });
-
-
-    document
-        .querySelectorAll(".button-refuser")
-        .forEach(function (bouton) {
-
-            bouton.addEventListener(
-                "click",
-                function () {
-
-                    const id =
-                        Number(this.dataset.id);
-
-                    refuserCompte(id);
-                }
-            );
-        });
-}
-
-
-/* =========================
-   BOUTON SUPPRIMER
-   ========================= */
-
-function ajouterEvenementsValides() {
-
-    document
-        .querySelectorAll(".button-supprimer")
-        .forEach(function (bouton) {
-
-            bouton.addEventListener(
-                "click",
-                function () {
-
-                    const id =
-                        Number(this.dataset.id);
-
-                    supprimerCompte(id);
-                }
-            );
-        });
-}
-
-
-/* =========================
-   VALIDER
-   ========================= */
-
-function validerCompte(id) {
-
-    const compte =
-        comptesAttente.find(function (compte) {
-            return compte.id === id;
-        });
-
-    if (!compte) {
-        return;
-    }
-
-
-    comptesValides.push(compte);
-
-
-    comptesAttente =
-        comptesAttente.filter(function (compte) {
-            return compte.id !== id;
-        });
-
-
-    sauvegarder();
-}
-
-
-/* =========================
-   REFUSER
-   ========================= */
-
-function refuserCompte(id) {
-
-    comptesAttente =
-        comptesAttente.filter(function (compte) {
-            return compte.id !== id;
-        });
-
-
-    sauvegarder();
-}
-
-
-/* =========================
-   SUPPRIMER
-   ========================= */
-
-function supprimerCompte(id) {
-
-    comptesValides =
-        comptesValides.filter(function (compte) {
-            return compte.id !== id;
-        });
-
-
-    sauvegarder();
-}
-
-
-/* =========================
-   SAUVEGARDE
-   ========================= */
-
-function sauvegarder() {
-
-    localStorage.setItem(
-        "comptesEnAttente",
-        JSON.stringify(comptesAttente)
-    );
-
-    localStorage.setItem(
-        "comptesValides",
-        JSON.stringify(comptesValides)
-    );
-
-    afficherComptes();
-}
-
-
-/* =========================
-   DÉCONNEXION
-   ========================= */
-
-document
-    .getElementById("logoutButton")
-    .addEventListener("click", function () {
-
-        window.location.href =
-            "index.html";
-
-    });
-
-
-/* =========================
-   PREMIER AFFICHAGE
-   ========================= */
-
-afficherComptes();
+chargerComptes();

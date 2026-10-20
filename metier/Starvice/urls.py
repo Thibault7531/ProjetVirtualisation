@@ -26,5 +26,7 @@ urlpatterns = [
     path('services/', views.getService),
     path('services/<int:service_id>/notes', views.getServiceGrades),
     path('compte-en-attente', views.getAccountPendingValidation),
-    path('valider-compte', views.validateAccount)
+    path('valider-compte', views.validateAccount),
+    path("catalogue-services/", views.catalogue_services),
+    path("enregistrer-note/", views.enregistrer_note)
 ]

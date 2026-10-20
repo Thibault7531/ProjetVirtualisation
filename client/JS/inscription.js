@@ -1,4 +1,11 @@
 // =========================
+// CONFIGURATION API
+// =========================
+
+const API_URL = "http://127.0.0.1:8000";
+
+
+// =========================
 // TYPE DE COMPTE
 // =========================
 
@@ -11,10 +18,12 @@ const typeCompteMenu =
 const typeCompteTexte =
     document.getElementById("typeCompteTexte");
 
-let typeCompte = "client";
+let typeCompte = "Client";
 
 
-// Ouvrir / fermer le menu
+// =========================
+// OUVRIR / FERMER LE MENU
+// =========================
 
 typeCompteButton.addEventListener("click", function () {
 
@@ -23,7 +32,9 @@ typeCompteButton.addEventListener("click", function () {
 });
 
 
-// Choix d'un type
+// =========================
+// CHOIX D'UN TYPE
+// =========================
 
 typeCompteMenu
     .querySelectorAll("button")
@@ -31,7 +42,10 @@ typeCompteMenu
 
         bouton.addEventListener("click", function () {
 
-            typeCompte = bouton.dataset.type;
+            typeCompte =
+                bouton.dataset.type === "prestataire"
+                    ? "Prestataire"
+                    : "Client";
 
             typeCompteTexte.textContent =
                 bouton.textContent.trim();
@@ -43,12 +57,16 @@ typeCompteMenu
     });
 
 
-// Fermer le menu si on clique ailleurs
+// =========================
+// FERMER LE MENU AILLEURS
+// =========================
 
 document.addEventListener("click", function (event) {
 
-    if (!typeCompteButton.contains(event.target) &&
-        !typeCompteMenu.contains(event.target)) {
+    if (
+        !typeCompteButton.contains(event.target) &&
+        !typeCompteMenu.contains(event.target)
+    ) {
 
         typeCompteMenu.classList.remove("visible");
 
@@ -68,10 +86,14 @@ const erreur =
     document.getElementById("erreur-inscription");
 
 
-formulaire.addEventListener("submit", function (event) {
+formulaire.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
+
+    // =========================
+    // RÉCUPÉRATION DES CHAMPS
+    // =========================
 
     const nom =
         document.getElementById("nom").value.trim();
@@ -89,7 +111,12 @@ formulaire.addEventListener("submit", function (event) {
         document.getElementById("motDePasse").value;
 
 
-    // Vérification
+    erreur.style.display = "none";
+
+
+    // =========================
+    // VÉRIFICATION
+    // =========================
 
     if (
         !nom ||
@@ -108,29 +135,73 @@ formulaire.addEventListener("submit", function (event) {
     }
 
 
-    // Sauvegarde provisoire
+    try {
 
-    const utilisateur = {
+        // =========================
+        // APPEL API
+        // =========================
 
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        identifiant: identifiant,
-        motDePasse: motDePasse,
-        typeCompte: typeCompte
+        const params = new URLSearchParams({
 
-    };
+            login: identifiant,
+            password: motDePasse,
+            role: typeCompte,
+            nom: nom,
+            prenom: prenom,
+            email: email
 
-
-    localStorage.setItem(
-        "utilisateur",
-        JSON.stringify(utilisateur)
-    );
+        });
 
 
-    // Retour à la connexion
+        const response = await fetch(
+            `${API_URL}/register/?${params.toString()}`
+        );
 
-    window.location.href = "index.html";
+
+        const data = await response.json();
+
+
+        console.log("Réponse inscription :", data);
+
+
+        // =========================
+        // INSCRIPTION RÉUSSIE
+        // =========================
+
+        if (data.status === "success") {
+
+            alert(
+                "Inscription réussie ! Votre compte doit être validé avant de pouvoir vous connecter."
+            );
+
+            window.location.href = "index.html";
+
+            return;
+        }
+
+
+        // =========================
+        // ERREUR API
+        // =========================
+
+        erreur.textContent =
+            data.message || "Erreur lors de l'inscription.";
+
+        erreur.style.display = "block";
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur lors de l'inscription :",
+            error
+        );
+
+        erreur.textContent =
+            "Impossible de contacter le serveur.";
+
+        erreur.style.display = "block";
+    }
 
 });
 
@@ -141,6 +212,7 @@ formulaire.addEventListener("submit", function (event) {
 
 const retourConnexion =
     document.getElementById("retourConnexion");
+
 
 retourConnexion.addEventListener("click", function () {
 

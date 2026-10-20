@@ -1,74 +1,88 @@
-// =========================
-// CALCUL DE LA MOYENNE
-// =========================
+const API_URL = "http://127.0.0.1:8000";
 
-function calculerMoyenne() {
+const listeClients = document.querySelector(".liste-clients");
+const titreService = document.querySelector(".service-titre");
+const noteMoyenne = document.getElementById("noteMoyenne");
+const boutonRetour = document.getElementById("buttonRetour");
+const boutonDeconnexion = document.getElementById("buttonDeconnexion");
 
-    const notes =
-        document.querySelectorAll(".client .note");
+async function chargerEvaluations() {
+    const role = localStorage.getItem("role");
+    const idService = new URLSearchParams(window.location.search).get("service");
 
-    let total = 0;
-    let nombreNotes = 0;
+    if (!role || role.toUpperCase() !== "PRESTATAIRE" || !idService) {
+        window.location.href = "index.html";
+        return;
+    }
 
-    notes.forEach(function (noteElement) {
+    listeClients.innerHTML = "<p>Chargement des évaluations...</p>";
 
-        // Remplace la virgule française par un point
-        const valeur =
-            parseFloat(
-                noteElement.textContent
-                    .trim()
-                    .replace(",", ".")
-            );
+    try {
+        const reponse = await fetch(
+            `${API_URL}/services/${encodeURIComponent(idService)}/notes`,
+            { credentials: "include" }
+        );
 
-        if (!isNaN(valeur)) {
+        const donnees = await reponse.json();
 
-            total += valeur;
-            nombreNotes++;
-
+        if (!reponse.ok) {
+            listeClients.innerHTML =
+                `<p>${donnees.message || "Impossible de charger les évaluations."}</p>`;
+            return;
         }
 
-    });
+        titreService.textContent = donnees.intitule;
+        listeClients.innerHTML = "";
 
+        if (!donnees.notes || donnees.notes.length === 0) {
+            listeClients.innerHTML = "<p>Aucune évaluation pour ce service.</p>";
+            noteMoyenne.textContent = "—";
+            return;
+        }
 
-    const moyenne =
-        nombreNotes > 0
-            ? total / nombreNotes
-            : 0;
+        let total = 0;
 
+        donnees.notes.forEach(note => {
+            total += Number(note.valeur);
 
-    document.getElementById("noteMoyenne").textContent =
-        moyenne.toFixed(2).replace(".", ",");
+            const ligne = document.createElement("div");
+            ligne.classList.add("client");
 
+            const nom = document.createElement("p");
+            nom.classList.add("nom-client");
+            nom.textContent = `${note.prenom_client} ${note.nom_client}`;
+
+            const valeur = document.createElement("p");
+            valeur.classList.add("note");
+            valeur.textContent = `${note.valeur}/5`;
+
+            const commentaire = document.createElement("p");
+            commentaire.classList.add("commentaire");
+            commentaire.textContent = note.commentaire || "Aucun commentaire";
+
+            ligne.append(nom, valeur, commentaire);
+            listeClients.appendChild(ligne);
+        });
+
+        noteMoyenne.textContent =
+            (total / donnees.notes.length).toFixed(2) + " / 5";
+
+    } catch (erreur) {
+        console.error(erreur);
+        listeClients.innerHTML =
+            "<p>Impossible de contacter le serveur Django.</p>";
+    }
 }
 
-
-// Calcul au chargement
-calculerMoyenne();
-
-
-// =========================
-// RETOUR
-// =========================
-
-const boutonRetour =
-    document.getElementById("buttonRetour");
-
-boutonRetour.addEventListener("click", function () {
-
+boutonRetour.addEventListener("click", () => {
     window.location.href = "prestataire.html";
-
 });
 
-
-// =========================
-// DÉCONNEXION
-// =========================
-
-const boutonDeconnexion =
-    document.getElementById("buttonDeconnexion");
-
-boutonDeconnexion.addEventListener("click", function () {
-
+boutonDeconnexion.addEventListener("click", () => {
+    localStorage.removeItem("id_compte");
+    localStorage.removeItem("role");
+    localStorage.removeItem("login");
     window.location.href = "index.html";
-
 });
+
+chargerEvaluations();
