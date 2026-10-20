@@ -10,7 +10,6 @@ CREATE TABLE COMPTE (
     mot_de_passe_hash CHAR(255),
     role CHAR(255),
     statut CHAR(255),
-    id_personne INT,
     UNIQUE (login)
 );
 

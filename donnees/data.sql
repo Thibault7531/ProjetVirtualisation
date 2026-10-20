@@ -35,22 +35,22 @@ VALUES
 -- =========================================================
 
 INSERT INTO COMPTE
-    (id_compte, login, mot_de_passe_hash, role, statut, id_personne)
+    (id_compte, login, mot_de_passe_hash, role, statut)
 VALUES
     -- Prestataires
-    (1, 'jdupont', 'hash123', 'PRESTATAIRE', 'VALIDE', 1),
-    (2, 'smartin', 'hash456', 'PRESTATAIRE', 'VALIDE', 2),
-    (3, 'lbernard', 'hash789', 'PRESTATAIRE', 'VALIDE', 3),
-    (4, 'epetit', 'hash012', 'PRESTATAIRE', 'VALIDE', 4),
-    (5, 'trobert', 'hash345', 'PRESTATAIRE', 'VALIDE', 5),
+    (1, 'jdupont', 'hash123', 'PRESTATAIRE', 'VALIDE'),
+    (2, 'smartin', 'hash456', 'PRESTATAIRE', 'VALIDE'),
+    (3, 'lbernard', 'hash789', 'PRESTATAIRE', 'VALIDE'),
+    (4, 'epetit', 'hash012', 'PRESTATAIRE', 'VALIDE'),
+    (5, 'trobert', 'hash345', 'PRESTATAIRE', 'VALIDE'),
 
     -- Clients
-    (6, 'adurand', 'hash111', 'CLIENT', 'VALIDE', 1),
-    (7, 'hmoreau', 'hash222', 'CLIENT', 'VALIDE', 2),
-    (8, 'cleroy', 'hash333', 'CLIENT', 'VALIDE', 3),
-    (9, 'nsimon', 'hash444', 'CLIENT', 'VALIDE', 4),
-    (10, 'llaurent', 'hash555', 'CLIENT', 'VALIDE', 5),
-    (11, 'lmichel', 'hash666', 'CLIENT', 'VALIDE', 6);
+    (6, 'adurand', 'hash111', 'CLIENT', 'VALIDE'),
+    (7, 'hmoreau', 'hash222', 'CLIENT', 'VALIDE'),
+    (8, 'cleroy', 'hash333', 'CLIENT', 'VALIDE'),
+    (9, 'nsimon', 'hash444', 'CLIENT', 'VALIDE'),
+    (10, 'llaurent', 'hash555', 'CLIENT', 'VALIDE'),
+    (11, 'lmichel', 'hash666', 'CLIENT', 'VALIDE');
 
 
 -- =========================================================
