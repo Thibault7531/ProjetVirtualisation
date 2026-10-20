@@ -77,8 +77,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ProjetVirt',
-        'USER': 'metier',
-        'PASSWORD': 'metier',
+        'USER': os.getenv('DB_USER', 'metier'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'metier'),
         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
         'PORT': '3306',
     }
