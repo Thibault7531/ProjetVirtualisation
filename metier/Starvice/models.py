@@ -33,3 +33,23 @@ class Client(models.Model):
     class Meta:
         managed = False
         db_table = 'CLIENT'
+
+class Service(models.Model):
+    id_service = models.IntegerField(primary_key=True)
+    intitule = models.CharField(max_length=255)
+    id_prestataire = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'SERVICE'
+
+class Note(models.Model):
+    pk = models.CompositePrimaryKey("id_client", "id_service")
+    id_client = models.IntegerField()
+    id_service = models.IntegerField()
+    valeur = models.IntegerField()
+    commentaire = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'NOTE'

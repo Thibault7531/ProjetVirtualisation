@@ -44,5 +44,7 @@ CREATE TABLE NOTE (
     valeur INT,
     commentaire CHAR(255),
     PRIMARY KEY (id_client, id_service),
-    CONSTRAINT CHECK (valeur <= 20 AND valeur >= 0)
+    CONSTRAINT CHECK (valeur <= 20 AND valeur >= 0),
+    CONSTRAINT FOREIGN KEY (id_client) REFERENCES CLIENT(id_client),
+    CONSTRAINT FOREIGN KEY (id_service) REFERENCES SERVICE(id_service)
 )
