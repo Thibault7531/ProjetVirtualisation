@@ -48,7 +48,7 @@ boutonConnexion.addEventListener("click", async function () {
         // Appel de l'API Django
 
         const response = await fetch(
-            `${API_URL}/login/?username=${encodeURIComponent(identifiant)}&password=${encodeURIComponent(motDePasse)}`
+            `${API_URL}/api/login/?username=${encodeURIComponent(identifiant)}&password=${encodeURIComponent(motDePasse)}`
         );
 
 

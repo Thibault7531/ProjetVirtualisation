@@ -154,7 +154,7 @@ formulaire.addEventListener("submit", async function (event) {
 
 
         const response = await fetch(
-            `${API_URL}/register/?${params.toString()}`
+            `${API_URL}/api/register/?${params.toString()}`
         );
 
 

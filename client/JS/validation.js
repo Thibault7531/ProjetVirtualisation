@@ -13,7 +13,7 @@ async function chargerComptes() {
     }
 
     try {
-        const reponse = await fetch(`${API_URL}/compte-en-attente`, {
+        const reponse = await fetch(`${API_URL}/api/compte-en-attente`, {
             credentials: "include"
         });
 
@@ -66,7 +66,7 @@ function afficherComptes(conteneur, comptes, enAttente) {
 
             boutonValider.addEventListener("click", async () => {
                 try {
-                    const url = new URL(`${API_URL}/valider-compte`);
+                    const url = new URL(`${API_URL}/api/valider-compte`);
                     url.searchParams.set("account_id", compte.id_compte);
 
                     const resultat = await fetch(url, {

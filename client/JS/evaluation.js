@@ -19,7 +19,7 @@ async function chargerEvaluations() {
 
     try {
         const reponse = await fetch(
-            `${API_URL}/services/${encodeURIComponent(idService)}/notes`,
+            `${API_URL}/api/services/${encodeURIComponent(idService)}/notes`,
             { credentials: "include" }
         );
 

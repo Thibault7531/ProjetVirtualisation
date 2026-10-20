@@ -26,7 +26,7 @@ async function chargerServicesClient() {
 
     try {
         // Récupérer les services disponibles
-        const reponse = await fetch(`${API_URL}/catalogue-services/`, {
+        const reponse = await fetch(`${API_URL}/api/catalogue-services/`, {
             credentials: "include"
         });
 
@@ -39,7 +39,7 @@ async function chargerServicesClient() {
         }
 
         // Récupérer les notes déjà laissées par le client
-        const notesReponse = await fetch(`${API_URL}/notes/`, {
+        const notesReponse = await fetch(`${API_URL}/api/notes/`, {
             credentials: "include"
         });
 
@@ -144,7 +144,7 @@ async function chargerServicesClient() {
 
                 try {
                     const resultat = await fetch(
-                        `${API_URL}/enregistrer-note/`,
+                        `${API_URL}/api/enregistrer-note/`,
                         {
                             method: "POST",
                             credentials: "include",

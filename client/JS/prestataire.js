@@ -15,7 +15,7 @@ async function chargerServices() {
     listeServices.innerHTML = "<p>Chargement des services...</p>";
 
     try {
-        const reponse = await fetch(`${API_URL}/services/`, {
+        const reponse = await fetch(`${API_URL}/api/services/`, {
             method: "GET",
             credentials: "include"
         });
