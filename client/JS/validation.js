@@ -52,11 +52,18 @@ function afficherComptes(conteneur, comptes, enAttente) {
         const ligne = document.createElement("div");
         ligne.classList.add("compte");
 
-        const informations = document.createElement("p");
-        informations.textContent =
-            `${compte.prenom} ${compte.nom} — ${compte.email} (${compte.role})`;
+        const username = document.createElement("p");
+        username.textContent = `${compte.prenom} ${compte.nom}`;
 
-        ligne.appendChild(informations);
+        const email = document.createElement("p");
+        email.textContent = compte.email;
+
+        const role = document.createElement("p");
+        role.textContent = compte.role;
+
+        ligne.appendChild(username);
+        ligne.appendChild(email);
+        ligne.appendChild(role);
 
         if (enAttente) {
             const boutonValider = document.createElement("button");
@@ -64,7 +71,9 @@ function afficherComptes(conteneur, comptes, enAttente) {
 
             boutonValider.addEventListener("click", async () => {
                 try {
-                    const url = new URL(`${API_URL}/api/valider-compte`);
+                    const url = new URL(`http://${window.location.host}/api/valider-compte`);
+                    url.searchParams.set("login", localStorage.getItem("login"));
+                    url.searchParams.set("password", localStorage.getItem("password"));
                     url.searchParams.set("account_id", compte.id_compte);
 
                     const resultat = await fetch(url, {

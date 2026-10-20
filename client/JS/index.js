@@ -77,6 +77,11 @@ boutonConnexion.addEventListener("click", async function () {
                 identifiant
             );
 
+            localStorage.setItem(
+                "password",
+                motDePasse
+            )
+
 
             // =========================
             // REDIRECTION SELON LE ROLE
