@@ -36,7 +36,7 @@ Sur les 3 machines:
 - /path/to/env/bin/pip install django mysqlclient gunicorn
 - Create .env file to define the DB_HOST, DB_USER, DB_PASSWORD environment variables the access to the database.
 - Cloner ce dépôt git 'git clone https://github.com/Thibault7531/ProjetVirtualisation.git /path/to/repo'
-- Executer 'DB_HOST=ipbasededonnees /path/to/env/bin/python /path/to/repo/client/manage.py migrate'
+- Executer 'DB_HOST=ipbasededonnees /path/to/env/bin/python /path/to/repo/metier/manage.py migrate'
 - Modifier la configuration du service gunicorn [gunicorn.service](ConfigVM/gunicorn.service) en mettant le chemin du venv et du dépot.
 - Mettre ce fichier dans le dossier /etc/systemd/system/
 - Mettre à jour les services 'sudo systemctl daemon-reload'

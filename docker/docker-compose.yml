@@ -1,0 +1,49 @@
+# Remplace les 3 VM : base de données, couche métier, serveur web.
+services:
+
+  # --- VM 1 : base de données ---
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ProjetVirt
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql # les données survivent aux redémarrages
+      # Les scripts sont exécutés dans l'ordre des numéros, au 1er démarrage seulement
+      - ./../donnees/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./../donnees/data.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # --- VM 2 : couche métier (Django + gunicorn) ---
+  metier:
+    build: ./../metier
+    restart: unless-stopped
+    environment:
+      DB_HOST: db # le nom du service remplace l'IP 10.10.10.x
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy # attend que MariaDB soit prête
+
+  # --- VM 3 : serveur web (nginx) ---
+  client:
+    image: nginx:stable
+    restart: unless-stopped
+    ports:
+      - "80:80" # seul service accessible depuis l'extérieur
+    volumes:
+      - ./../client:/usr/share/nginx/html:ro
+      - ./ConfigDocker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - metier
+
+volumes:
+  db_data:
