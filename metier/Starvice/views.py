@@ -447,16 +447,43 @@ def catalogue_services(request):
 
 @require_POST
 def enregistrer_note(request):
-    compte = compte_connecte(request)
+    donnees = json.loads(request.body)
+    login = donnees["login"]
+    password = donnees["password"]
 
-    if compte is None or compte.role.upper() != "CLIENT":
-        return JsonResponse(
-            {"message": "Accès réservé aux clients connectés"},
-            status=401
-        )
+    if login == '' or password == '':
+        data = {
+            "status": "error",
+            "message": "Username or password cannot be empty"
+        }
+        return JsonResponse(data)
+
+    item = Compte.objects.filter(login=login)
+
+    if not item.exists():
+        data = {
+            "status": "error",
+            "message": "Account not found"
+        }
+        return JsonResponse(data)
+
+    account = item.first()
+
+    if account.statut == 'NONVALIDE':
+        data = {
+            "status": "error",
+            "message": "Account not validated"
+        }
+        return JsonResponse(data)
+
+    if not check_password(password, account.mot_de_passe_hash):
+        data = {
+            "status": "error",
+            "message": "Invalid password"
+        }
+        return JsonResponse(data)
 
     try:
-        donnees = json.loads(request.body)
         id_service = int(donnees["id_service"])
         valeur = int(donnees["valeur"])
         commentaire = str(
@@ -477,7 +504,7 @@ def enregistrer_note(request):
 
     try:
         client = Client.objects.get(
-            id_compte=compte.id_compte
+            id_compte=account.id_compte
         )
 
         service = Service.objects.get(

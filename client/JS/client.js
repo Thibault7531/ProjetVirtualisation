@@ -140,6 +140,18 @@ async function chargerServicesClient() {
 
                 boutonEnregistrer.disabled = true;
 
+                let csrf = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookie = document.cookie.split(';');
+                    for (let i = 0; i < cookie.length; i++) {
+                        const cookieName = cookie[i].split('=')[0].trim();
+                        if (cookieName === 'csrftoken') {
+                            csrf = cookie[i].split('=')[1];
+                            break;
+                        }
+                    }
+                }
+
                 try {
                     const resultat = await fetch(
                         `/api/enregistrer-note/`,
@@ -147,9 +159,12 @@ async function chargerServicesClient() {
                             method: "POST",
                             credentials: "include",
                             headers: {
-                                "Content-Type": "application/json"
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": csrf
                             },
                             body: JSON.stringify({
+                                login: localStorage.getItem('login'),
+                                password: localStorage.getItem('password'),
                                 id_service: service.id_service,
                                 valeur: valeur,
                                 commentaire: commentaire
