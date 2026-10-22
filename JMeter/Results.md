@@ -1,0 +1,14 @@
+## Machine virtuelles
+
+| Charge | Débit (Transactions/seconde) | Latence médiane (ms) | Latence 90e centile (ms) | Latence 95e centile (ms) | Latence 99e centile (ms) | Taux d'erreur | CPU BDD | CPU Metier | CPU Proxy                           | RAM BDD | RAM Metier | RAM Proxy | I/O BDD |
+|--------|------------------------------|----------------------|--------------------------|--------------------------|--------------------------|---------------|---------|------------|-------------------------------------|---------|------------|-----------|---------|
+| 10     | 83,44                        | 141                  | 592                      | 698                      | 969                      | 0%            | 7%      | 100%       | 5%                                  | 310Mo   | 330 Mo     | 200Mo     | 24Ko/s  |
+| 50     | 79,11                        | 1228                 | 2319                     | 2516                     | 2759                     | 0%            | 6%      | 100%       | 5%                                  | 302Mo   | 357Mo      | 200Mo     | 24Ko/s  |
+| 100    | 80,23                        | 2360                 | 4346                     | 5200                     | 5780                     | 0%            | 6%      | 100%       | 5%                                  | 305Mo   | 360Mo      | 203Mo     | 24Ko/s  |
+| 200    | 71,35                        | 3357                 | 10096                    | 11314                    | 14017                    | 0%            | 6%      | 100%       | 5%                                  | 305Mo   | 365Mo      | 195Mo     | 24Ko/s  |
+| 500    | 4773,26                      | 2                    | 4                        | 5                        | 1029                     | 99,45%        | 6%      | 100%       | 2% (pic à 100% au début du plateau) | 302Mo   | 365Mo      | 195Mo     | 24Ko/s  |
+
+On constate que la machine virtuelle métier est surchargée dès 10 utilisateurs connectés et que cette machine est le maillon faible de l'application car elle est la seule à être utilisée à 100%.
+Cependant, toutes les requêtes sont traitées par la machine jusqu'à 200 utilisateurs avec comme coût un temps de latence élevé.
+Lors du test à 500 utilisateurs, l'application est surchargée et ne peut plus traiter les requêtes. Un pic à 100% a eu lieu sur la machine gérant le proxy puis toutes les requêtes sont bloquées.
+Pour améliorer les performances de l'application, il faudrait augmenter la capacité de la machine virtuelle métier ou utiliser plusieurs machines virtuelles métier pour distribuer le traitement des requêtes.
