@@ -73,7 +73,7 @@ L'environnement virtuel Python et le fichier `gunicorn.service` ne sont plus né
 Le fichier `docker-compose.yml` remplace à lui seul la configuration réseau et l'installation des trois machines :
 
 - **Réseau** : Docker crée un réseau privé dans lequel les conteneurs se trouvent par leur nom. Django se connecte à la base avec `DB_HOST=db` et Nginx redirige `/api/` vers `http://metier:8000` (voir [nginx.conf](ConfigDocker/nginx.conf)). Les adresses IP fixes `10.10.10.x` disparaissent.
-- **Isolation** : seul le conteneur `client` publie un port (80) vers l'extérieur. La base de données et la couche métier ne sont joignables que depuis les autres conteneurs, ce qui reproduit l'isolation obtenue avec le réseau interne de VirtualBox, sans avoir besoin d'une seconde interface NAT pour l'administration.
+- **Isolation** : seul le conteneur `client` publie un port (8080) vers l'extérieur. La base de données et la couche métier ne sont joignables que depuis les autres conteneurs, ce qui reproduit l'isolation obtenue avec le réseau interne de VirtualBox, sans avoir besoin d'une seconde interface NAT pour l'administration.
 - **Persistance** : les données de MariaDB sont stockées dans un volume Docker (`db_data`). Elles sont conservées lorsque les conteneurs sont supprimés ou recréés.
 - **Initialisation de la base** : les scripts [schema.sql](donnees/schema.sql) et [data.sql](donnees/data.sql) sont montés dans le répertoire d'initialisation de l'image MariaDB. Ils sont exécutés automatiquement et dans le bon ordre au premier démarrage. La création de l'utilisateur est faite par l'image elle-même à partir de variables d'environnement, et cet utilisateur n'a de droits que sur la base `ProjetVirt` (le script `users.sql` donnait tous les droits sur l'ensemble du serveur).
 - **Ordre de démarrage** : le conteneur `metier` attend que la base soit réellement prête (vérification de santé avec `depends_on`) avant de se lancer, ce qui évite les erreurs de connexion au démarrage.
@@ -84,11 +84,10 @@ Le fichier `docker-compose.yml` remplace à lui seul la configuration réseau et
 Là où le déploiement par machines virtuelles demandait d'installer trois systèmes, de configurer le réseau et de suivre une longue procédure, l'application complète se lance désormais avec une seule commande :
 
 ```
-cp env.example .env
 docker compose up --build
 ```
 
-L'application est alors accessible sur le port 80 de la machine hôte. L'arrêt se fait avec `docker compose down` (les données sont conservées) et un retour à l'état initial avec `docker compose down -v`.
+L'application est alors accessible sur le port 8080 de la machine hôte. L'arrêt se fait avec `docker compose down` (les données sont conservées) et un retour à l'état initial avec `docker compose down -v`.
 
 ### Apports et limites
 
@@ -104,7 +103,6 @@ Plusieurs limites restent à prendre en compte :
 - les conteneurs partagent le noyau de l'hôte : l'isolation est moins forte qu'avec des machines virtuelles ;
 - aucune limite de ressources n'est fixée dans notre configuration, un conteneur peut donc consommer autant de CPU que l'hôte le lui permet (voir les résultats de la couche métier) ;
 - la migration de la base est lancée au démarrage du conteneur métier, ce qui poserait problème si plusieurs instances démarraient en même temps ;
-- le paramétrage de Django n'est pas adapté à la production (`DEBUG = True`, clé secrète dans le code, `ALLOWED_HOSTS` restreint).
 
 
 ## Tests de performance
@@ -161,6 +159,6 @@ Dans les deux cas, le même constat apparaît : la couche métier est le maillon
 - lancer plusieurs instances du conteneur métier derrière un répartiteur de charge (ce que Docker permet facilement) ;
 - ajuster le nombre de workers de gunicorn en fonction du nombre de cœurs disponibles ;
 - à plus long terme, utiliser un framework et un langage compilé pour la couche métier ;
-- préparer une configuration adaptée à la production (désactivation du mode debug, gestion des secrets, limites de ressources par conteneur).
+- préparer une configuration adaptée à la production (désactivation du mode debug, gestion des données secrètes, limites de ressources par conteneur).
 
 En conclusion, les machines virtuelles restent pertinentes lorsque l'on a besoin d'une isolation forte ou de systèmes d'exploitation différents, mais pour une application web de ce type, les conteneurs sont plus simples à déployer, plus économes en ressources et plus faciles à faire évoluer.
